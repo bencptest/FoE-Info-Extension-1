@@ -237,7 +237,7 @@ export function getProvinceDetailed(msg) {
         // else
         //clanHTML = `<p id="gvgGuildPowerTextP" class="overflow">`
         clanHTML = `<table id="gvgGuildPowerTextT" class="overflow gvgTable">
-            <tr><th>Age</th><th>Points</th><th class="hide-copy">Updated At</th></tr>`; /* add class to updated at, then when copy is clicked set it to hide and then cope and return it back to shown */
+            <tr><th>Age</th><th>Points</th><th class="hide-copy">Updated At</th></tr>`;
         gvgPower.forEach((age) => {
             clanHTML += `<tr><td>${fGVGagesname(age.era)}</td><td>${age.power}</td><td class="hide-copy">${age.time}</td></tr>`;
             total += +age.power;
@@ -269,17 +269,16 @@ export function getProvinceDetailed(msg) {
         
         clanHTML = `<strong>${fGVGagesname(map.era)} <span data-i18n="livestatus">Live Status</span></strong>`;
         var gvgGuildPowerTextDiv = document.getElementById("gvgCurrAgeHeadlineText")
-        if (gvgGuildPowerTextDiv) gvgGuildPowerTextDiv.innerHTML = clanHTML;            
+        gvgGuildPowerTextDiv.innerHTML = clanHTML;
 
-        clanHTML = `<table id="gvgCurrAgeTextT" class="overflow gvgTable">
-            <tr><th>Pos</th><th>Guild Name</th><th>Power</th><th>Sectors</th></tr>`;
+        clanHTML = '<p id="gvgCurrAgeTextP" style="height: 200px" class="overflow">';
         // clanHTML += `<strong>${map.era}</strong><br>`;
         GVGstatus.forEach((clan, j) => {
             clanHTML += `<tr><td>${j + 1}</td><td>${clan.name}</td><td>${Math.round(clan.power)}</td><td class="wrap-copy">${clan.sectors}</td></tr>`;
         });
         // }
         // clanHTML += `<br>`;
-        clanHTML += `</table>`;
+        clanHTML += `</p>`;
         
         var gvgCurrAgeTextDiv = document.getElementById("gvgCurrAgeText")
         if (gvgCurrAgeTextDiv) {
@@ -288,21 +287,21 @@ export function getProvinceDetailed(msg) {
         }
         
 
-        clanHTML = `<table id="gvgAllGuildsPowerTextT" class="overflow gvgTable">
-            <tr><th>Pos</th><th>Guild Name</th><th>Power</th></tr>`;
+        var gvgAllGuildsPowerTextDiv = document.getElementById("gvgAllGuildsPowerText")
+
+        clanHTML = `<p id="gvgAllGuildsPowerTextP" style="height: 200px" class="overflow">`;
         document.getElementById('gvgWarnGuildPower')?.remove();
         document.getElementById('gvgWarnAllGuildPower')?.remove();
         if (gvgAgeNotloadList.length > 0){
            var gvgWarnFunc = (id) => `<span id="gvgWarn${id}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="${gvgAgeNotloadList.toString()} were not loaded yet"><span>    </span><svg class="bi bi-exclamation-diamond-fill" fill="#808000" width="16" height="16"><use xlink:href="${icons}#exclamation-diamond-fill"/></svg></span> `
            var headlineSpan = document.getElementById("gvgGuildPowerHeadlineText")
-           if (headlineSpan) headlineSpan.innerHTML = gvgWarnFunc("GuildPower") + headlineSpan.innerHTML
+           if (headlineSpan.innerHTML) headlineSpan.innerHTML = gvgWarnFunc("GuildPower") + headlineSpan.innerHTML
            headlineSpan = document.getElementById("gvgAllGuildsPowerHeadlineText")
-           if (headlineSpan) headlineSpan.innerHTML = gvgWarnFunc("AllGuildPower") + headlineSpan.innerHTML
+           if (headlineSpan.innerHTML) headlineSpan.innerHTML = gvgWarnFunc("AllGuildPower") + headlineSpan.innerHTML
         }
 
         Object.keys(gvgPowerAllSorted).forEach((clan, j) => {
-            clanHTML += `<tr><td>${j + 1}</td><td>${gvgPowerAllSorted[clan].name}</td><td>${Math.round(gvgPowerAllSorted[clan].total)}</td></tr>`;
-            //clanHTML += `${j + 1} ${gvgPowerAllSorted[clan].name}:  ${Math.round(gvgPowerAllSorted[clan].total)}<br>`;
+            clanHTML += `${j + 1} ${gvgPowerAllSorted[clan].name}:  ${Math.round(gvgPowerAllSorted[clan].total)}<br>`;
         });
         // }
         // clanHTML += `<br>`;
