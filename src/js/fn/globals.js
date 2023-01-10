@@ -25,11 +25,23 @@ export var toolOptions = {
 	'visitSize': 200,
 	'rewardSize': 200,
 	'buildingCostSize': 200,
+	'gvgOverview': 200,
+	'gvgGuildPower': 177,
+	'gvgCurrAge': 177,
+	'gvgAllGuildsPower': 177,
 	'minSize': 50
 };
 
 export function setToolOptions(value) {
 	toolOptions = value;
+}
+
+export function setToolOption(value, height) {
+	if (toolOptions[value] && height > toolOptions.minSize) {
+		// console.debug('setFriendsSize',height,toolOptions);
+		toolOptions[value] = height > 500 ? 500 : height;
+		storage.set('toolOptions', toolOptions);
+	}
 }
 
 export function setFriendsSize(height) {

@@ -26,10 +26,10 @@ export var collapseArmy  = false;
 export var collapseGoods  = true;
 export var collapseGVG  = false;
 export var collapseGVGinfo  = false;
-export var collapseGVGOverview  = false;
-export var collapseGVGGuildPower  = false;
-export var collapseGVGCurrAge  = false;
-export var collapseGVGAllGuildsPower  = false;
+export var collapsegvgOverview  = false;
+export var collapsegvgGuildPower  = false;
+export var collapsegvgCurrAge  = false;
+export var collapsegvgAllGuildsPower  = false;
 export var collapseStats  = false;
 export var collapseGBInfo  = false;
 export var collapseGBRewards  = false;
@@ -87,16 +87,16 @@ export default function set(key, value) {
 			collapseGVG = value;
 			break;
 		case 'collapseGVGOverview':
-			collapseGVGOverview = value;
+			collapsegvgOverview = value;
 			break;
 		case 'collapseGVGGuildPower':
-			collapseGVGGuildPower = value;
+			collapsegvgGuildPower = value;
 			break;
 		case 'collapseGVGCurrAge':
-			collapseGVGCurrAge = value;
+			collapsegvgCurrAge = value;
 			break;
 		case 'collapseGVGAllGuildsPower':
-			collapseGVGAllGuildsPower = value;
+			collapsegvgAllGuildsPower = value;
 			break;
 		case 'collapseGoods':
 			collapseGoods = value;
@@ -236,23 +236,27 @@ export function fCollapseGVGinfo() {
 }
 
 export function fcollapseGVGOverview() {
-	collapseGVGOverview = !collapseGVGOverview;
-	element.updateIcon("gvgOverviewIcon","gvgOverviewText",collapseGVGOverview);
+	collapsegvgOverview = !collapsegvgOverview;
+	document.getElementById("gvgOverviewCopyID").style.display = collapsegvgOverview ? 'none' : 'block';
+	element.updateIcon("gvgOverviewIcon","gvgOverviewText",collapsegvgOverview);
 	// console.debug('fcollapseGVGOverview',collapseGVGinfo,collapseOptions);
 }
 export function fcollapseGVGGuildPower() {
-	collapseGVGGuildPower = !collapseGVGGuildPower;
-	element.updateIcon("gvgGuildPowerIcon","gvgGuildPowerText",collapseGVGGuildPower);
+	collapsegvgGuildPower = !collapsegvgGuildPower;
+	document.getElementById("gvgGuildPowerCopyID").style.display = collapsegvgGuildPower ? 'none' : 'block';
+	element.updateIcon("gvgGuildPowerIcon","gvgGuildPowerText",collapsegvgGuildPower);
 	// console.debug('fcollapseGVGGuildPower',collapseGVGinfo,collapseOptions);
 }
 export function fcollapseGVGCurrAge() {
-	collapseGVGCurrAge = !collapseGVGCurrAge;
-	element.updateIcon("gvgCurrAgeIcon","gvgCurrAgeText",collapseGVGCurrAge);
+	collapsegvgCurrAge = !collapsegvgCurrAge;
+	document.getElementById("gvgCurrAgeCopyID").style.display = collapsegvgCurrAge ? 'none' : 'block';
+	element.updateIcon("gvgCurrAgeIcon","gvgCurrAgeText",collapsegvgCurrAge);
 	// console.debug('fcollapseGVGCurrAge',collapseGVGinfo,collapseOptions);
 }
 export function fcollapseGVGAllGuildsPower() {
-	collapseGVGAllGuildsPower = !collapseGVGAllGuildsPower;
-	element.updateIcon("gvgAllGuildsPowerIcon","gvgAllGuildsPowerText",collapseGVGAllGuildsPower);
+	collapsegvgAllGuildsPower = !collapsegvgAllGuildsPower;
+	document.getElementById("gvgAllGuildsPowerCopyID").style.display = collapsegvgAllGuildsPower ? 'none' : 'block';
+	element.updateIcon("gvgAllGuildsPowerIcon","gvgAllGuildsPowerText",collapsegvgAllGuildsPower);
 	// console.debug('fcollapseGVGAllGuildsPower',collapseGVGinfo,collapseOptions);
 }
 

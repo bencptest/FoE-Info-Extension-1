@@ -182,6 +182,26 @@ function copyToClipboard(element) {
 	$temp.remove();
 }
 
+export function genericCopy(name){
+	const hideElements = document.getElementsByClassName('hide-copy');
+	for (const element of hideElements) 
+		element.style.visibility  = 'hidden';
+	const wrapElements = document.getElementsByClassName('wrap-copy');
+	for (const element of wrapElements) 
+		element.innerHTML  = `(${element.innerHTML})`;
+	var selection = window.getSelection();
+	selection.removeAllRanges();
+	var range = document.createRange();
+	var copytext = document.getElementById(name);
+	range.selectNode(copytext);
+	selection.addRange(range);
+	document.execCommand("copy");
+	for (const element of wrapElements) 
+		element.innerHTML  = `${element.innerHTML.slice(1,-1)}`;
+	for (const element of hideElements) 
+		element.style.visibility  = 'visible';
+}
+
 function addToClipboard(element, html) {
 	var clipboard = document.getElementById("clipboard");
 
