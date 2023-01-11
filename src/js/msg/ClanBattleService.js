@@ -124,6 +124,9 @@ export function getContinent(msg) {
         var overviewBtn = document.getElementById("gvgOverviewCopyID");
         if(overviewBtn) overviewBtn.style = `display: ${collapse.collapsegvgOverview ? 'none' : 'block'}`;
 
+        var wrapperDiv = document.getElementById("gvgOverviewWrapper");
+        if (wrapperDiv) wrapperDiv.style.display = "block";
+
         $('body').i18n();
     }
     else {
@@ -269,16 +272,17 @@ export function getProvinceDetailed(msg) {
         
         clanHTML = `<strong>${fGVGagesname(map.era)} <span data-i18n="livestatus">Live Status</span></strong>`;
         var gvgGuildPowerTextDiv = document.getElementById("gvgCurrAgeHeadlineText")
-        gvgGuildPowerTextDiv.innerHTML = clanHTML;
+        if (gvgGuildPowerTextDiv) gvgGuildPowerTextDiv.innerHTML = clanHTML;
 
-        clanHTML = '<p id="gvgCurrAgeTextP" style="height: 200px" class="overflow">';
+        clanHTML = `<table id="gvgCurrAgeTextT" class="overflow gvgTable">
+            <tr><th>Pos</th><th>Guild Name</th><th>Power</th><th>Sectors</th></tr>`;
         // clanHTML += `<strong>${map.era}</strong><br>`;
         GVGstatus.forEach((clan, j) => {
             clanHTML += `<tr><td>${j + 1}</td><td>${clan.name}</td><td>${Math.round(clan.power)}</td><td class="wrap-copy">${clan.sectors}</td></tr>`;
         });
         // }
         // clanHTML += `<br>`;
-        clanHTML += `</p>`;
+        clanHTML += `</table>`;
         
         var gvgCurrAgeTextDiv = document.getElementById("gvgCurrAgeText")
         if (gvgCurrAgeTextDiv) {
@@ -287,21 +291,21 @@ export function getProvinceDetailed(msg) {
         }
         
 
-        var gvgAllGuildsPowerTextDiv = document.getElementById("gvgAllGuildsPowerText")
+        clanHTML = `<table id="gvgAllGuildsPowerTextT" class="overflow gvgTable">
+            <tr><th>Pos</th><th>Guild Name</th><th>Power</th></tr>`;
 
-        clanHTML = `<p id="gvgAllGuildsPowerTextP" style="height: 200px" class="overflow">`;
         document.getElementById('gvgWarnGuildPower')?.remove();
         document.getElementById('gvgWarnAllGuildPower')?.remove();
         if (gvgAgeNotloadList.length > 0){
            var gvgWarnFunc = (id) => `<span id="gvgWarn${id}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="${gvgAgeNotloadList.toString()} were not loaded yet"><span>    </span><svg class="bi bi-exclamation-diamond-fill" fill="#808000" width="16" height="16"><use xlink:href="${icons}#exclamation-diamond-fill"/></svg></span> `
            var headlineSpan = document.getElementById("gvgGuildPowerHeadlineText")
-           if (headlineSpan.innerHTML) headlineSpan.innerHTML = gvgWarnFunc("GuildPower") + headlineSpan.innerHTML
+           if (headlineSpan) headlineSpan.innerHTML = gvgWarnFunc("GuildPower") + headlineSpan.innerHTML
            headlineSpan = document.getElementById("gvgAllGuildsPowerHeadlineText")
-           if (headlineSpan.innerHTML) headlineSpan.innerHTML = gvgWarnFunc("AllGuildPower") + headlineSpan.innerHTML
+           if (headlineSpan) headlineSpan.innerHTML = gvgWarnFunc("AllGuildPower") + headlineSpan.innerHTML
         }
 
         Object.keys(gvgPowerAllSorted).forEach((clan, j) => {
-            clanHTML += `${j + 1} ${gvgPowerAllSorted[clan].name}:  ${Math.round(gvgPowerAllSorted[clan].total)}<br>`;
+            clanHTML += `<tr><td>${j + 1}</td><td>${gvgPowerAllSorted[clan].name}</td><td>${Math.round(gvgPowerAllSorted[clan].total)}</td></tr>`;
         });
         // }
         // clanHTML += `<br>`;
@@ -322,7 +326,12 @@ export function getProvinceDetailed(msg) {
         if(btn) btn.style = `display: ${collapse.collapsegvgCurrAge ? 'none' : 'block'}`;
         btn = document.getElementById("gvgAllGuildsPowerCopyID");
         if(btn) btn.style = `display: ${collapse.collapsegvgAllGuildsPower ? 'none' : 'block'}`;
-                
+
+        ["gvgGuildPowerWrapper", "gvgCurrAgeWrapper", "gvgAllGuildsPowerWrapper"].forEach( element => {
+            var wrapperDiv = document.getElementById(element);
+            if (wrapperDiv) wrapperDiv.style.display = "block";            
+        });
+
         $('body').i18n();
 
         // console.debug(Guilds,GuildSectors,GuildPower,GVGstatus);
@@ -375,11 +384,12 @@ function buildGvgInnerDiv(parentDiv, copyFunc, collapseFunc, collapseVar, name, 
         headlineDiv = document.createElement('div');
         headlineDiv.id = `gvg${name}Headline`;
         headlineDiv.className = `collapse${!collapse.collapseGVGinfo ? ' show' : ''}`;
+        wrapperDiv.style.display = "none";
         wrapperDiv.appendChild(headlineDiv);
         headlineDiv.innerHTML = `<p id="gvg${name}TextLabel" href="#gvg${name}Text" data-bs-toggle="collapse">
             <svg class="bi header-icon" id="gvg${name}Icon" href="#gvg${name}Text" data-bs-toggle="collapse" fill="currentColor" width="12" height="16"><use xlink:href="${icons}#${collapseVar ? 'plus' : 'dash'}-circle"/></svg>
             <span id=gvg${name}HeadlineText><strong>${text}:</strong></span></p>
-            <button type="button" class="badge rounded-pill bg-success float-end right-button" id="gvg${name}CopyID" style="display: none"><span data-i18n="copy">Copy</span></button>`;
+            <button type="button" class="badge rounded-pill bg-success float-end full-right-button" id="gvg${name}CopyID" style="display: none"><span data-i18n="copy">Copy</span></button>`;
         textDiv = document.createElement('div');
         textDiv.id = `gvg${name}Text`;
         textDiv.className = `collapse${!collapseVar ? ' show' : ''} overflow`;
