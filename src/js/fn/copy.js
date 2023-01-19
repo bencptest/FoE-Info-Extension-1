@@ -189,13 +189,39 @@ export function genericCopy(name){
 	const wrapElements = document.getElementsByClassName('wrap-copy');
 	for (const element of wrapElements) 
 		element.innerHTML  = `(${element.innerHTML})`;
-	var selection = window.getSelection();
-	selection.removeAllRanges();
-	var range = document.createRange();
+	const colonElements = document.getElementsByClassName('colon-copy');
+	for (const element of colonElements) 
+		element.innerHTML  = `${element.innerHTML}:`;
+	const sectElements = document.getElementsByClassName('sect-copy');
+	for (const element of sectElements) 
+		element.innerHTML  = `${element.innerHTML} sect,`;		
+	const goodsElements = document.getElementsByClassName('goods-copy');
+	for (const element of goodsElements) 
+		element.innerHTML  = `${element.innerHTML} goods`;				
+
 	var copytext = document.getElementById(name);
-	range.selectNode(copytext);
-	selection.addRange(range);
-	document.execCommand("copy");
+	// text area method
+	let textArea = document.createElement("textarea");
+	textArea.value = copytext.innerText.trim().replace(/\t/g, ' ');
+	// make the textarea out of viewport
+	textArea.style.position = "fixed";
+	textArea.style.left = "-999999px";
+	textArea.style.top = "-999999px";
+	document.body.appendChild(textArea);
+	textArea.focus();
+	textArea.select();
+	new Promise((res, rej) => {
+		// here the magic happens
+		document.execCommand('copy') ? res() : rej();
+		textArea.remove();
+	});
+
+	for (const element of goodsElements) 
+		element.innerHTML  = element.innerHTML.replace(" goods", "");
+	for (const element of sectElements) 
+		element.innerHTML  = element.innerHTML.replace(" sect,", "");
+	for (const element of colonElements) 
+		element.innerHTML  = `${element.innerHTML.slice(0,-1)}`;
 	for (const element of wrapElements) 
 		element.innerHTML  = `${element.innerHTML.slice(1,-1)}`;
 	for (const element of hideElements) 

@@ -106,9 +106,9 @@ export function getContinent(msg) {
                 // const siege = BigNumber((3 * Math.pow(count,1.5) + 0.045 * Math.pow(count,3.1)) / 5 + 1).times(5).dp(0);
                 const eraName = fGVGagesname(era.era);
                 if (era.era == 'AllAge')
-                    clanHTML += `<tr><td>AA</td><td>${count}</td><td class="wrap-copy">${siege} medals</td></tr>`;
+                    clanHTML += `<tr><td class="colon-copy">AA</td><td class="sect-copy">${count}</td><td>${siege} medals</td></tr>`;
                 else
-                    clanHTML += `<tr><td>${eraName}</td><td>${count}</td><td class="wrap-copy">${siege}</td></tr>`;
+                    clanHTML += `<tr><td class="colon-copy">${eraName}</td><td class="sect-copy">${count}</td><td class="goods-copy">${siege}</td></tr>`;
             }
         });
         
@@ -242,7 +242,7 @@ export function getProvinceDetailed(msg) {
         clanHTML = `<table id="gvgGuildPowerTextT" class="overflow gvgTable">
             <tr><th>Age</th><th>Points</th><th class="hide-copy">Updated At</th></tr>`;
         gvgPower.forEach((age) => {
-            clanHTML += `<tr><td>${fGVGagesname(age.era)}</td><td>${age.power}</td><td class="hide-copy">${age.time}</td></tr>`;
+            clanHTML += `<tr><td class="colon-copy">${fGVGagesname(age.era)}</td><td>${age.power}</td><td class="hide-copy">${age.time}</td></tr>`;
             total += +age.power;
         });
         
@@ -278,7 +278,7 @@ export function getProvinceDetailed(msg) {
             <tr><th>Pos</th><th>Guild Name</th><th>Power</th><th>Sectors</th></tr>`;
         // clanHTML += `<strong>${map.era}</strong><br>`;
         GVGstatus.forEach((clan, j) => {
-            clanHTML += `<tr><td>${j + 1}</td><td>${clan.name}</td><td>${Math.round(clan.power)}</td><td class="wrap-copy">${clan.sectors}</td></tr>`;
+            clanHTML += `<tr><td>#${j + 1}</td><td class="colon-copy">${clan.name}</td><td>${Math.round(clan.power)}</td><td class="wrap-copy">${clan.sectors}</td></tr>`;
         });
         // }
         // clanHTML += `<br>`;
@@ -305,7 +305,7 @@ export function getProvinceDetailed(msg) {
         }
 
         Object.keys(gvgPowerAllSorted).forEach((clan, j) => {
-            clanHTML += `<tr><td>${j + 1}</td><td>${gvgPowerAllSorted[clan].name}</td><td>${Math.round(gvgPowerAllSorted[clan].total)}</td></tr>`;
+            clanHTML += `<tr><td>#${j + 1}</td><td class="colon-copy">${gvgPowerAllSorted[clan].name}</td><td>${Math.round(gvgPowerAllSorted[clan].total)}</td></tr>`;
         });
         // }
         // clanHTML += `<br>`;
